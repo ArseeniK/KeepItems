@@ -19,31 +19,36 @@ namespace Smod.TestPlugin
 
         public void OnSetRole(PlayerSetRoleEvent ev)
         {
-            if (ev.Role != Role.SCIENTIST && ev.Role != Role.CLASSD) { return; }
-            int playerId = ev.Player.PlayerId;
-            int count = ev.Items.Count;
-            Vector pos = ev.Player.GetPosition();
-            float x = pos.x; float y = pos.y; float z = pos.z;
-            y = y + 5; Vector itemPos = new Vector(x, y, z);
-            /*foreach (KeyValuePair<int, List<int>> kv in escapeItems)
+            plugin.Info("SETROLE " + ev.Player.PlayerId + " - " + ev.Player.TeamRole.Role);
+            if (ev.Player.TeamRole.Role == Role.CHAOS_INSUGENCY || ev.Player.TeamRole.Role == Role.NTF_SCIENTIST)
             {
-                plugin.Debug("[KeepItems] Items found for player " + kv.Key + " : " + kv.Value + "");
-            }*/
-            if (escapeItems.ContainsKey(ev.Player.PlayerId)) {
-                plugin.Debug("Escape Items found for " + ev.Player.Name + " (" + ev.Player.PlayerId + "). Have currently " + count + " items");
-                if (escapeItems.TryGetValue(ev.Player.PlayerId, out List<int> tmp))
+                int playerId = ev.Player.PlayerId;
+                int count = ev.Items.Count;
+                Vector pos = ev.Player.GetPosition();
+                float x = pos.x; float y = pos.y; float z = pos.z;
+                y = y + 5; Vector itemPos = new Vector(x, y, z);
+                /*foreach (KeyValuePair<int, List<int>> kv in escapeItems)
                 {
-                    foreach (int number in tmp)
+                    plugin.Info("[KeepItems] Items found for player " + kv.Key + " : " + kv.Value + "");
+                }*/
+                if (escapeItems.ContainsKey(ev.Player.PlayerId))
+                {
+                    plugin.Debug("Escape Items found for " + ev.Player.Name + " (" + ev.Player.PlayerId + "). Have currently " + count + " items");
+                    if (escapeItems.TryGetValue(ev.Player.PlayerId, out List<int> tmp))
                     {
-                        if (count >= 8) {
-                            PluginManager.Manager.Server.Map.SpawnItem((ItemType)number, itemPos, pos);
+                        foreach (int number in tmp)
+                        {
+                            if (count >= 8)
+                            {
+                                PluginManager.Manager.Server.Map.SpawnItem((ItemType)number, itemPos, pos);
+                            }
+                            else { ev.Items.Add((ItemType)number); }
+                            count++;
                         }
-                        else { ev.Items.Add((ItemType)number); }
-                        count++;
                     }
+                    else { plugin.Debug("Failed to get values for player " + ev.Player.Name + " (" + ev.Player.PlayerId + ")"); }
+                    escapeItems.Remove(ev.Player.PlayerId);
                 }
-                else { plugin.Debug("Failed to get values for player " + ev.Player.Name + " (" + ev.Player.PlayerId + ")"); }
-                escapeItems.Remove(ev.Player.PlayerId);
             }
         }
         public void OnCheckEscape(PlayerCheckEscapeEvent ev)
