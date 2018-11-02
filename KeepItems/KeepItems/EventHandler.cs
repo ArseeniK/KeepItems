@@ -19,7 +19,6 @@ namespace Smod.TestPlugin
 
         public void OnSetRole(PlayerSetRoleEvent ev)
         {
-            plugin.Info("SETROLE " + ev.Player.PlayerId + " - " + ev.Player.TeamRole.Role);
             if (ev.Player.TeamRole.Role == Role.CHAOS_INSUGENCY || ev.Player.TeamRole.Role == Role.NTF_SCIENTIST)
             {
                 int playerId = ev.Player.PlayerId;
