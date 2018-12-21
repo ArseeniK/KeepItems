@@ -19,17 +19,11 @@ namespace Smod.TestPlugin
 
         public void OnSetRole(PlayerSetRoleEvent ev)
         {
-            if (ev.Player.TeamRole.Role == Role.CHAOS_INSUGENCY || ev.Player.TeamRole.Role == Role.NTF_SCIENTIST)
+            if (ev.Player.TeamRole.Role == Role.CHAOS_INSURGENCY || ev.Player.TeamRole.Role == Role.NTF_SCIENTIST || ev.TeamRole.Team == Team.NINETAILFOX || ev.TeamRole.Team == Team.CHAOS_INSURGENCY)
             {
-                int playerId = ev.Player.PlayerId;
-                int count = ev.Items.Count;
-                Vector pos = ev.Player.GetPosition();
-                float x = pos.x; float y = pos.y; float z = pos.z;
-                y = y + 5; Vector itemPos = new Vector(x, y, z);
-                /*foreach (KeyValuePair<int, List<int>> kv in escapeItems)
-                {
-                    plugin.Info("[KeepItems] Items found for player " + kv.Key + " : " + kv.Value + "");
-                }*/
+                int playerId = ev.Player.PlayerId, count = ev.Items.Count;
+                Vector playerPos = ev.Player.GetPosition();
+                Vector itemSpawnPoint = new Vector(playerPos.x, playerPos.y + 5, playerPos.z);
                 if (escapeItems.ContainsKey(ev.Player.PlayerId))
                 {
                     plugin.Debug("Escape Items found for " + ev.Player.Name + " (" + ev.Player.PlayerId + "). Have currently " + count + " items");
@@ -39,7 +33,7 @@ namespace Smod.TestPlugin
                         {
                             if (count >= 8)
                             {
-                                PluginManager.Manager.Server.Map.SpawnItem((ItemType)number, itemPos, pos);
+                                PluginManager.Manager.Server.Map.SpawnItem((ItemType)number, itemSpawnPoint, itemSpawnPoint);
                             }
                             else { ev.Items.Add((ItemType)number); }
                             count++;
@@ -59,10 +53,6 @@ namespace Smod.TestPlugin
                 plugin.Debug("Added item " + (int)item.ItemType + " for " + item.ItemType);
             }
             if (tmp.Count > 0) { escapeItems.Add(ev.Player.PlayerId, tmp); }
-            foreach (KeyValuePair<int, List<int>> kv in escapeItems)
-            {
-                // plugin.Debug("INFO ITEMS 2: " + kv.Key + " : " + kv.Value + "");
-            }
         }
     }
 }

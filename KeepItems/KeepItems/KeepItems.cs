@@ -13,8 +13,8 @@ namespace KeepItems
         id = "arsk.keepitems",
         version = "1.0",
         SmodMajor = 3,
-        SmodMinor = 1,
-        SmodRevision = 20
+        SmodMinor = 2,
+        SmodRevision = 0
         )]
     class KeepItems : Plugin
     {
@@ -24,7 +24,7 @@ namespace KeepItems
 
         public override void OnEnable()
         {
-            this.Info("Loaded");
+            this.Info("KeepItems loaded");
         }
 
         public override void Register()
