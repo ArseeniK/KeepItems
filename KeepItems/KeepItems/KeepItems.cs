@@ -9,7 +9,7 @@ namespace KeepItems
     [PluginDetails(
         author = "ArseeniK",
         name = "KeepItems",
-        description = "Allow you keep items when escape",
+        description = "Allow you to keep items when escape",
         id = "arsk.keepitems",
         version = "1.0",
         SmodMajor = 3,
