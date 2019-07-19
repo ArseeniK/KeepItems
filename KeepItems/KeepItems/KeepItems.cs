@@ -13,7 +13,7 @@ namespace KeepItems
         id = "arsk.keepitems",
         version = "1.0",
         SmodMajor = 3,
-        SmodMinor = 2,
+        SmodMinor = 5,
         SmodRevision = 0
         )]
     class KeepItems : Plugin
